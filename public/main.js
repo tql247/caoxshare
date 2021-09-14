@@ -60,7 +60,7 @@ $("#share-fcode-btn").on('click', function () {
 
 function uploadFcode(newFcode, hupLeft) {
     const settings = {
-        "url": "http://localhost:5000/fcode/post",
+        "url": "https://caoxshare.herokuapp.com/fcode/post",
         "method": "POST",
         "timeout": 0,
         "headers": {
@@ -80,7 +80,7 @@ function uploadFcode(newFcode, hupLeft) {
 
 async function checkPass(inputPassword, fcodeId) {
     const settings = {
-        "url": `http://localhost:5000/fcode/get?caoxPass=${inputPassword}&fcodeId=${fcodeId}`,
+        "url": `https://caoxshare.herokuapp.com/fcode/get?caoxPass=${inputPassword}&fcodeId=${fcodeId}`,
         "method": "GET",
         "timeout": 0,
     };
