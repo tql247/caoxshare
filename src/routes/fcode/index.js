@@ -2,26 +2,7 @@ const express = require('express');
 const {checkPassword} = require("../../utils/bcrypt");
 const router = express.Router();
 const { v4: uuid } = require('uuid');
-let listCode = [
-    {
-        "time": 1631634526806,
-        "id": "3ac40bea-b152-4bac-acc2-e3a7d44c25bc",
-        "fcode": "A13123s241241231d",
-        "hup": 30,
-    },
-    {
-        "time": 1631634526806,
-        "id": "3ac40bea-b152-4bac-acc2-e3a7d44c25bc",
-        "fcode": "12345678",
-        "hup": 20,
-    },
-    {
-        "time": 1631634526806,
-        "id": "3ac40bea-b152-4bac-acc2-e3a7d44c25bc",
-        "fcode": "123456789101112",
-        "hup": 10,
-    },
-];
+let listCode = [];
 
 router.get('/', (req, res)=>{
     // io.emit('outside');
