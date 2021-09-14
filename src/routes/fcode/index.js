@@ -1,8 +1,14 @@
 const express = require('express');
+const clearListCode = require("../../utils/clearListCode");
 const {checkPassword} = require("../../utils/bcrypt");
 const router = express.Router();
 const { v4: uuid } = require('uuid');
 let listCode = [];
+
+// kiểm tra chất listCode mỗi 1 tiếng
+setInterval(function () {
+    clearListCode(listCode)
+}, 1000*60*60)
 
 router.get('/', (req, res)=>{
     // io.emit('outside');
