@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link href="public/style.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <title>Caox share fcode</title>
+</head>
+<body>
+
+
+<div id="thanks-caox" class="bottom-0 left-0 m-2 position-absolute toast align-items-center text-white bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+        <div class="toast-body">
+            Cảm ơn người anh em! +1 respect
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+</div>
+
+<div id="success-toast" class="bottom-0 left-0 m-2 position-absolute toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+        <div class="toast-body">
+            Mã Fcode đã được copy
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+</div>
+
+<div id="fail-toast" class="bottom-0 left-0 m-2 position-absolute toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+        <div class="toast-body">
+            Caox password không đúng
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade rounded-0" id="getFcodeModal" tabindex="-1" aria-labelledby="getFcodeModalLabel" aria-hidden="true">
+    <div class="modal-dialog rounded-0">
+        <div class="modal-content rounded-0">
+            <div class="modal-header">
+                <h5 class="modal-title" id="getFcodeModalLabel">Húp Caox share Fcode</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="caox-password-name" class="col-form-label">Caox password:</label>
+                        <input type="text" class="form-control rounded-0" id="caox-password-name">
+                    </div>
+                </form>
+                <div class="w-100 d-flex flex-row">
+                    <button type="button" class="rounded-0 flex-grow-1 w-auto btn btn-secondary" data-bs-dismiss="modal">Thôi</button>
+                    <button id="get-fcode-btn" type="button" class="rounded-0 flex-grow-1 w-auto btn btn-primary">Húp</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-6 mx-auto py-5 rounded-0 ">
+            <div class="input-group mb-3 rounded-0">
+                <div class=" d-flex flex-row w-100">
+                    <input id="caox-fcode"type="text" class="rounded-0 form-control w-8" placeholder="Fcode" aria-label="Fcode" aria-describedby="share-fcode-btn">
+                    <input id="hup-left" type="number" min="0" step="1" class="rounded-0 form-control w-4" placeholder="Lượt đã húp" aria-label="Hup left" aria-describedby="share-fcode-btn">
+                </div>
+                <button class="rounded-0 my-1 btn btn-outline-secondary w-100" type="button" id="share-fcode-btn">Share</button>
+            </div>
+
+
+            <ul class="list-group rounded-0 list-fcode bg-gray">
+                <% listCode.forEach((code) => { %>
+                <li class="overflow-hidden w-100 position-relative w-auto list-group-item d-flex border justify-content-between align-items-center mt-1">
+                    <div class="open-fcode-modal position-absolute end-100 d-flex align-items-center justify-content-center h-100 bg-secondary w-100">
+                        <span class="d-none fcode-id"><%= code.id %></span>
+                        <span>Húp</span>
+                    </div>
+
+                    <% const hiddenValue = code.fcode.substr(2, code.fcode.length - 4) %>
+                    <% const masker = Array(hiddenValue.length).fill("*").join("") %>
+                    <%= code.fcode.replace(hiddenValue, masker) %>
+
+                    <span class="badge bg-primary rounded-pill"><%= code.hup %></span>
+                </li>
+                <% }) %>
+            </ul>
+        </div>
+    </div>
+</div>
+<script src="public/main.js"></script>
+</body>
+
+</html>
