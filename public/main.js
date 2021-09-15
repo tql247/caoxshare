@@ -3,6 +3,7 @@ const openFcodeModal = $(".open-fcode-modal");
 const getFcodeBtn = $("#get-fcode-btn");
 const caoxFcodeInput = $("#caox-fcode");
 const caoxFcodeHupLeft = $("#hup-left");
+const DEVELOP_MODE = false;
 
 const getFcodeModal = new bootstrap.Modal(document.getElementById('getFcodeModal'), {
     keyboard: false
@@ -60,7 +61,7 @@ $("#share-fcode-btn").on('click', function () {
 
 function uploadFcode(newFcode, hupLeft) {
     const settings = {
-        "url": "https://caoxshare.herokuapp.com/fcode/post",
+        "url": (DEVELOP_MODE?"http://localhost:5000":"https://caoxshare.herokuapp.com") + "/fcode/post",
         "method": "POST",
         "timeout": 0,
         "headers": {
@@ -68,9 +69,12 @@ function uploadFcode(newFcode, hupLeft) {
         },
         "data": JSON.stringify({
             "fcode": newFcode,
-            "hup": hupLeft
+            "hup": hupLeft,
+            "created_at": moment().format("YY-MM-DD hh:mm:ss")
         }),
     };
+
+    console.log(settings)
 
     $.ajax(settings).done(function (response) {
         thanksCaoXToast.show();
@@ -80,7 +84,7 @@ function uploadFcode(newFcode, hupLeft) {
 
 async function checkPass(inputPassword, fcodeId) {
     const settings = {
-        "url": `https://caoxshare.herokuapp.com/fcode/get?caoxPass=${inputPassword}&fcodeId=${fcodeId}`,
+        "url": (DEVELOP_MODE?"http://localhost:5000":"https://caoxshare.herokuapp.com") + `/fcode/get?caoxPass=${inputPassword}&fcodeId=${fcodeId}`,
         "method": "GET",
         "timeout": 0,
     };

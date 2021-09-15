@@ -10,6 +10,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <link href="public/style.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <title>Caox share fcode</title>
 </head>
 <body>
@@ -87,11 +89,11 @@
                         <span>Húp</span>
                     </div>
 
-                    <% const hiddenValue = code.fcode.substr(2, code.fcode.length - 4) %>
+                    <% const hiddenValue = code.code.substr(2, code.code.length - 4) %>
                     <% const masker = Array(hiddenValue.length).fill("*").join("") %>
-                    <%= code.fcode.replace(hiddenValue, masker) %>
+                    <%= code.code.replace(hiddenValue, masker) %>
 
-                    <span class="badge bg-primary rounded-pill"><%= code.hup %></span>
+                    <span class="badge bg-primary rounded-pill"><%= code.hup_time %></span>
                 </li>
                 <% }) %>
             </ul>

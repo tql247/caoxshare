@@ -1,30 +1,28 @@
 const express = require('express');
-const clearListCode = require("../../utils/clearListCode");
+const addFcodeToDatabase = require("../../data/services/addFcodeToDatabase");
+const getListFcode = require("../../data/services/getListFcode");
+const getFcode = require("../../data/services/getFcode");
+const updateHupTime = require("../../data/services/updateHupTime");
 const {checkPassword} = require("../../utils/bcrypt");
 const router = express.Router();
 const { v4: uuid } = require('uuid');
-let listCode = [];
 
-// kiểm tra chất listCode mỗi 1 tiếng
-setInterval(function () {
-    clearListCode(listCode)
-}, 1000*60*60)
 
-router.get('/', (req, res)=>{
-    // io.emit('outside');
+router.get('/', async (req, res)=>{
+    const listCode = await getListFcode();
     return res.render('fcode', {listCode: listCode});
 })
 
-router.post('/post', (req, res)=>{
+router.post('/post', async (req, res)=>{
     // uuid()
-    const newFcode = [{
-        time: Date.now(),
+    const newFcode = {
+        created_at: req.body['created_at'],
         id: uuid(),
-        fcode: req.body['fcode'],
-        hup: req.body['hup'],
-    }];
+        code: req.body['fcode'],
+        hup_time: req.body['hup'],
+    };
 
-    listCode = [...newFcode, ...listCode]
+    await addFcodeToDatabase(newFcode)
 
     return res.send(newFcode);
 })
@@ -33,17 +31,25 @@ router.get('/get', async (req, res)=>{
     // io.emit('outside');
     const caoxPass = req.query["caoxPass"];
     const fcodeId = req.query["fcodeId"];
+
     const isCaox = await checkPassword(caoxPass, process.env.CAOX_PASS_HASH);
 
-    let codeIndex = listCode.findIndex((code => code.id === fcodeId));
-    listCode[codeIndex].hup += 1
+    if (!isCaox) {
+        res.send({
+            status: false,
+            fcode: "Mật khẩu không đúng"
+        })
+    } else {
+        const fcode = await getFcode(fcodeId);
+        await updateHupTime(fcodeId);
 
-    const code = {
-        status: isCaox,
-        fcode: isCaox?listCode[codeIndex].fcode:"Mật khẩu không đúng"
+        const code = {
+            status: true,
+            fcode: fcode.code
+        }
+
+        res.send(code);
     }
-
-    res.send(code);
 })
 
 module.exports = router;

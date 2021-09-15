@@ -10,5 +10,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="jquery-3.5.0" level="application" />
     <orderEntry type="library" name="bcryptjs" level="application" />
+    <orderEntry type="library" name="moment.js" level="application" />
   </component>
 </module>
