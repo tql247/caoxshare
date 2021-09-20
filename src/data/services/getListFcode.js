@@ -9,7 +9,7 @@ async function getListFcode() {
         const pool = new Pool()
         const queryString = `
             SELECT id, code, hup_time, created_at FROM fcode
-            order by id desc;
+            order by created_at desc;
         `
         const res = await pool.query(queryString)
         await pool.end()
